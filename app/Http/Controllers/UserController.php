@@ -130,18 +130,18 @@ class UserController extends Controller
         // $toEmail = "akbarchaudhari10@gmail.com";
         $toEmail = "fluhar76@gmail.com";
         $moreUser = $user->email;
-        $message = "Hello, Welcome to our Website";
+        $message = "Hello, Mahirkhan";
         $subject = "Welcome to Akashyakalpa";
         $details = [
-            'name' => 'Akbarbhai',
-            'product' => 'Butter Milk',
-            'price' => '950',
+            'name' => 'To HR',
+            'product' => 'Happy Diwali',
+            'price' => 'I hope you enjoy this festival',
         ];
-        $describe = "Thank you for Butter Milk Order";
+        $describe = "I hope you enjoy this festival with family members";
 
         $request = Mail::to($toEmail)->cc($moreUser)->send(new WelcomeEmail($message, $subject, $details, $describe));
 
-         dd($request);
+        //  dd($request);
     }
     public function showDashboard()
     {

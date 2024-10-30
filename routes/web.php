@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('layout.main');
 });
+
 Route::get('dashboard', [UserController::class, 'showDashboard'])->name('dashboard');
 
 // Route::get('/register1', function () {

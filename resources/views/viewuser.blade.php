@@ -7,7 +7,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
-    <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+    <title>ViewUser</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -76,36 +76,37 @@
     </style>
     <style>
         .filter-button {
-          padding: 10px 20px;
-          font-size: 16px;
-          font-weight: bold;
-          color: #fff;
-          background-color: #4CAF50; /* Green color */
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: background-color 0.3s, transform 0.3s;
-          display: inline-flex;
-          align-items: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            /* Green color */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-flex;
+            align-items: center;
         }
-      
+
         .filter-button:hover {
-          background-color: #45a049;
-          transform: scale(1.05);
+            background-color: #45a049;
+            transform: scale(1.05);
         }
-      
+
         .filter-button:active {
-          background-color: #3d8b41;
+            background-color: #3d8b41;
         }
-      
+
         /* Optional icon styling */
         .filter-button svg {
-          width: 18px;
-          height: 18px;
-          margin-right: 8px;
-          fill: #fff;
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            fill: #fff;
         }
-      </style>
+    </style>
 </head>
 
 <body>
@@ -465,6 +466,17 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div class="btn">
+                        {{-- <button type="submit" class="btn  btn-primary">Filter</button> --}}
+                        <button class="filter-button" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M3 5h18v2H3V5zm4 7h10v2H7v-2zm6 7h-4v-2h4v2z" />
+                            </svg>
+                            <a href="{{ route('register') }}"> Register</a>
+                        </button>
+                    </div>
+                </div>
                 <!-- Simple Datatable start -->
                 <div class="card-box mb-30">
                     <div class="pd-20">
@@ -506,10 +518,10 @@
                                         {{-- <button type="submit" class="btn  btn-primary">Filter</button> --}}
                                         <button class="filter-button" type="submit">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                              <path d="M3 5h18v2H3V5zm4 7h10v2H7v-2zm6 7h-4v-2h4v2z"/>
+                                                <path d="M3 5h18v2H3V5zm4 7h10v2H7v-2zm6 7h-4v-2h4v2z" />
                                             </svg>
                                             Filter
-                                          </button>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -517,6 +529,7 @@
 
                         {{-- end date --}}
                     </div>
+
 
 
                     <div class="pb-20">
@@ -582,7 +595,7 @@
                                                                 class="btn btn-warning btn-sm">UPDATE</a>
                                                         </td>  --}}
 
-                                       
+
 
                                         <form method="post" action="{{ route('delete', $userItem->id) }}">
                                             @csrf
@@ -602,10 +615,19 @@
                                                         </a>
                                                     </form> --}}
 
-                                        <td class="dropdown-item btn" id="{{ $userItem->id }}"
-                                            href="{{ route('sendEmail', $userItem->id) }}"><i
-                                                class="fas fa-envelope"></i><i class="fab fa-google gmail-icon"></i>
-                                            Gmail</td>
+                                        <td> <a class="dropdown-item btn" id="{{ $userItem->id }}"
+                                                href="{{ route('sendEmail', $userItem->id) }}"><i
+                                                    class="fas fa-envelope"></i><i
+                                                    class="fab fa-google gmail-icon"></i>
+                                                Gmail</a>
+                                         </td>
+
+                                        <td>
+                                            <a class="dropdown-item" id="{{ $userItem->id }}"
+                                                href="{{ route('sendEmail', $userItem->id) }}"><i
+                                                    class="fas fa-envelope"></i>
+                                                Gmail</a>
+                                        </td>
 
                     </div>
                 </div>
@@ -730,13 +752,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('update',$userItem->id) }}" method="POST">
+                    <form action="{{ route('update', $userItem->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" id="id">
                         <div class="input-group custom">
                             <input type="text" class="form-control form-control-lg" placeholder="Username"
-                                name="username" id="username" value="{{$userItem->username}}" />
+                                name="username" id="username" value="{{ $userItem->username }}" />
 
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
@@ -745,7 +767,7 @@
                         </div>
                         <div class="input-group custom">
                             <input type="email" class="form-control form-control-lg" placeholder="Email"
-                                name="email" id="email" value="{{$userItem->email}}" />
+                                name="email" id="email" value="{{ $userItem->email }}" />
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
                             </div>
@@ -754,7 +776,7 @@
 
                         <div class="input-group custom">
                             <input type="password" class="form-control form-control-lg" placeholder="Password"
-                                name="password" id="password" value="{{$userItem->password}}" />
+                                name="password" id="password" value="{{ $userItem->password }}" />
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
                             </div>
@@ -762,7 +784,7 @@
 
                         <div class="input-group custom">
                             <input type="text" class="form-control form-control-lg" placeholder="Mobile Number"
-                                name="mobile" id="mobile" value="{{$userItem->mobile}}" />
+                                name="mobile" id="mobile" value="{{ $userItem->mobile }}" />
                             <div class="input-group-append custom">
                                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
                             </div>
