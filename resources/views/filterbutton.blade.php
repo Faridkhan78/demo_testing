@@ -1,3 +1,4 @@
+{{-- @extends('layout.main'); --}}
 {{-- <!DOCTYPE html>
 <html lang="en">
 <head>

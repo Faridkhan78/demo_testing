@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\welcomeemail;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -74,7 +75,7 @@ class UserController extends Controller
     public function updatePage($id)
     {
         $user = User::find($id);
-        return view('updateuser', compact('user'));
+        return view('', compact('user'));
     }
     public function updateUser(Request $request)
     {
@@ -123,11 +124,35 @@ class UserController extends Controller
         }
     }
 
+    // public function sendEmail($id)
+    // {
+    //     $user = User::find($id);
+    //     // $toEmail = "aghariaali123@gmail.com";
+    //     // $toEmail = "akbarchaudhari10@gmail.com";
+    //     $toEmail = "fluhar76@gmail.com";
+    //     $moreUser = $user->email;
+    //     $message = "Hello, Mahirkhan";
+    //     $subject = "Welcome to Akashyakalpa";
+    //     $details = [
+    //         'name' => 'To HR',
+    //         'product' => 'Happy Diwali',
+    //         'price' => 'I hope you enjoy this festival',
+    //     ];
+    //     $describe = "I hope you enjoy this festival with family members";
+
+    //     $request = Mail::to($toEmail)->cc($moreUser)->send(new WelcomeEmail($message, $subject, $details, $describe));
+
+    //     //  dd($request);
+    //     if ($user) {
+    //         return redirect()->route('viewuser');
+    //     }
+    // }
+
+
+    // start send sendEmail
     public function sendEmail($id)
     {
         $user = User::find($id);
-        // $toEmail = "aghariaali123@gmail.com";
-        // $toEmail = "akbarchaudhari10@gmail.com";
         $toEmail = "fluhar76@gmail.com";
         $moreUser = $user->email;
         $message = "Hello, Mahirkhan";
@@ -139,10 +164,27 @@ class UserController extends Controller
         ];
         $describe = "I hope you enjoy this festival with family members";
 
-        $request = Mail::to($toEmail)->cc($moreUser)->send(new WelcomeEmail($message, $subject, $details, $describe));
+        try {
+            // Attempt to send the email
+            Mail::to($toEmail)
+                ->cc($moreUser)
+                ->send(new WelcomeEmail($message, $subject, $details, $describe));
 
-        //  dd($request);
+            // If successful, flash success message to the session
+            session()->flash('status', 'success');
+            session()->flash('message', 'Email sent successfully!');
+        } catch (\Exception $e) {
+            // If there's an error, flash failure message to the session
+            session()->flash('status', 'failure');
+            session()->flash('message', 'Failed to send email. Please try again.');
+        }
+
+        // Redirect to the viewuser route
+        return redirect()->route('viewuser');
     }
+
+    // end sendemail
+
     public function showDashboard()
     {
         // dd(auth()->user());
@@ -250,8 +292,8 @@ class UserController extends Controller
             'end_date' => 'required|date|after:sdate',
         ]);
 
-       // $start_date = $request->input('start_date');
-       // $end_date = $request->input('end_date');
+        // $start_date = $request->input('start_date');
+        // $end_date = $request->input('end_date');
 
         $start_date = $request->start_date;
         $end_date = $request->end_date;
