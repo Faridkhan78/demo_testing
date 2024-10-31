@@ -164,8 +164,9 @@
 
     <div class="container">
         <h2>Login</h2>
-        
-        <form action="{{ route('loginMatch') }}" method="POST">
+
+        {{-- <form action="{{ route('loginMatch') }}" method="POST"> --}}
+            <form id="loginForm">
             @csrf
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder=" ">
@@ -185,7 +186,7 @@
                     @enderror
                 </span>
             </div>
-            <button type="submit" class="submit-btn">Login</button>
+            <button type="submit"  id="submitbtn" class="submit-btn">Login</button>
         </form>
         <div class="form-footer">
             Don’t have an account? <a href="{{ route('register') }}">Register here</a>
@@ -199,28 +200,69 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 
-    <script>
-        $('#search').on('keyup', function(){
-           $value= $(this).val();
-            if($value){
-                $('.alldata').hide();
-                $('.searchdata').show();
-            }else{
-                $('.alldata').show();
-                $('.searchdata').hide();
-            }
+<script>
+    $('#search').on('keyup', function() {
+        $value = $(this).val();
+        if ($value) {
+            $('.alldata').hide();
+            $('.searchdata').show();
+        } else {
+            $('.alldata').show();
+            $('.searchdata').hide();
+        }
 
-           $.ajax({
-            type:'get',
-            url:"{{ route('search')}}",
-            data:{
-                'search':$value
+        $.ajax({
+            type: 'get',
+            url: "{{ route('search') }}",
+            data: {
+                'search': $value
             },
-            success:function(data){
+            success: function(data) {
                 console.log(data);
                 $('#tbody').html(data);
-                
+
             }
-           })
+        })
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#submitbtn').on('click', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            var data = $('#loginForm')[0]; // Get the form element
+            var formData = new FormData(data); // Create a FormData object from the form
+
+            $.ajax({
+                url: "{{ route('loginMatch') }}", // Laravel route to handle form data
+                type: "POST",
+                data: formData,
+                processData: false, // Prevent jQuery from processing the data
+                contentType: false, // Prevent jQuery from setting contentType
+                success: function(response) {
+                    // Handle success response
+                    console.log("Form submitted successfully");
+                    console.log(response);
+                    // $('#message').html('<p style="color: green;">' + response.message + '</p>');
+                    // $('#registerForm')[0].reset(); // Clear form fields after successful submission
+                    setTimeout(function() {
+                        window.location.href = "{{ route('loginpage') }}";
+                    }, 2000);
+                },
+                error: function(xhr) {
+                    // Handle error response
+                    console.log("Error submitting form");
+                    let errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        if (errors.username) $('.error-username').text(errors.username[0]);
+                        if (errors.email) $('.error-email').text(errors.email[0]);
+                        if (errors.password) $('.error-password').text(errors.password[0]);
+                        if (errors.mobile) $('.error-mobile').text(errors.mobile[0]);
+                    }
+                }
+            });
         });
-    </script>
+    });
+</script>
+

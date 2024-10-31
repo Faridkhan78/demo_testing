@@ -248,11 +248,8 @@
                 // Handle success response
                 console.log("Form submitted successfully");
                 console.log(response);
-                // $('#message').html('<p style="color: green;">' + response.message + '</p>');
-                // $('#registerForm')[0].reset(); // Clear form fields after successful submission
-                setTimeout(function() {
-                window.location.href = "{{ route('loginpage') }}"; 
-            }, 2000);
+                $('#message').html('<p style="color: green;">' + response.message + '</p>');
+                $('#registerForm')[0].reset(); // Clear form fields after successful submission
             },
             error: function (xhr) {
                 // Handle error response

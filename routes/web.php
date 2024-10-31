@@ -12,6 +12,9 @@ Route::get('dashboard', [UserController::class, 'showDashboard'])->name('dashboa
 // Route::get('/register1', function () {
 //     return view('register1');
 // });
+Route::get('/refreshpage', function () {
+    return view('refreshpage');
+});
 
 
 Route::get('/filterbutton', function () {

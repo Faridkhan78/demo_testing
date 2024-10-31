@@ -615,7 +615,7 @@
     }, 2000); // 7000 milliseconds = 7 seconds
 </script>
 
-<script>
+{{-- <script>
     // Wait for the window to load before running the script
     window.onload = function() {
         // Set a timeout to hide the alert after 7 seconds
@@ -633,4 +633,4 @@
             }
         }, 7000); // 7 seconds
     };
-</script>
+</script> --}}

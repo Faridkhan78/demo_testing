@@ -16,11 +16,14 @@ class UserController extends Controller
     {
         // dd($request->all());
         $data = $request->validate([
+        
             'username' => 'required|string|min:3|max:30',
             'email' => 'required|email',
             'password' => 'required',
             'mobile' => 'required|numeric|digits:10'
+            
         ]);
+        
         // return $request->input();
 
         // $user = User::create([
@@ -30,8 +33,8 @@ class UserController extends Controller
         //     'mobile' =>$request->mobile,
 
         // ]);
+        
         $user = User::create($data);
-
 
         if ($user) {
             return redirect()->route('loginpage');
@@ -199,7 +202,6 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
-
         $credentials = $request->validate(
             [
                 'email' => 'required|email',
@@ -213,14 +215,11 @@ class UserController extends Controller
             ]
 
         );
-
-
         // new 
         $user = User::where('email', $credentials['email'])->first();
 
         // Check if the user exists
         if ($user) {
-
             // Check if the user's account is active (status = 1)
             if ($user->status == 1) {
                 // Attempt login
@@ -238,11 +237,8 @@ class UserController extends Controller
             // User does not exist
             return redirect()->back()->with('error', 'Email or password is not valid.');
         }
-
         // end new code
-
     }
-
 
     public function loginPage(Request $request)
     {
