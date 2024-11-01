@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -59,7 +60,10 @@ Route::get('filter',[UserController::class,'filter'])->name('filter');
 
 Route::get('fetchdata',[UserController::class,'fetchdatewisedata'])->name('fetchdata');
 
+//Gmail with Login
 
+Route::get('auth/google',[GoogleAuthController::class,'redirect'])->name('google-auth');
+Route::get('auth/google/call-back',[GoogleAuthController::class,'callbackGoogle']);
 
 
 

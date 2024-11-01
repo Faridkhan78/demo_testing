@@ -157,6 +157,25 @@
                 transform: translateY(0);
             }
         }
+        
+        .gmaillogin-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #ca8f94;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .gmaillogin-btn:hover {
+            background: #675816;
+        }
+
     </style>
 </head>
 
@@ -166,7 +185,7 @@
         <h2>Login</h2>
 
         {{-- <form action="{{ route('loginMatch') }}" method="POST"> --}}
-            <form id="loginForm">
+        <form id="loginForm">
             @csrf
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder=" ">
@@ -186,12 +205,24 @@
                     @enderror
                 </span>
             </div>
-            <button type="submit"  id="submitbtn" class="submit-btn">Login</button>
+            <button type="submit" id="submitbtn" class="submit-btn">Login</button>
+            or
+            
+
         </form>
+        {{-- <button type="submit"  id="" class="submit-btn">Login with Gmail</button> --}}
+        <div>
+            <a href="{{route('google-auth')}}" class="btn btn-primary gmaillogin-btn">
+                Login with Gmail
+            </a>
+        </div>
         <div class="form-footer">
             Don’t have an account? <a href="{{ route('register') }}">Register here</a>
         </div>
+
+        
     </div>
+    
 
 </body>
 
@@ -265,4 +296,3 @@
         });
     });
 </script>
-
